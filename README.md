@@ -1,5 +1,5 @@
 # copperleaftech.container-logs
-Enables container logging for a compose service via tail > file.log
+Enables container logging for a compose service via the log tail function
 
 The advantage of writing the logs out to file over simply using gelf from the compose file are that with only UDP support we might lose logs and we can't view the logs on the server retrospectively or in realtime, plus we lose multiline support which we could get from filebeat tailing the log.
 
