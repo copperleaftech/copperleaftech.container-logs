@@ -1,0 +1,16 @@
+---
+
+- name: Install systemd file
+  template: src=service.yml.j2 dest=/etc/systemd/system/{{ item.name }}.logger.service owner=root mode=0644
+  become: true
+  with_items: "{{ services }}"
+
+- name: Enable Services
+  systemd: name={{ item.name }} daemon_reload=yes enabled=yes
+  become: true
+  with_items: "{{ services }}"
+
+- name: Start Services
+  systemd: name={{ item.name }} daemon_reload=yes state=started
+  become: true
+  with_items: "{{ services }}"

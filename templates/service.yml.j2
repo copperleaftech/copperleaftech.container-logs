@@ -1,0 +1,14 @@
+[Unit]
+Description=Docker Compose Logger for {{ item.name }}
+After=docker.service
+Requires=docker.service
+
+[Service]
+RestartSec=3s
+Type=simple
+ExecStart=/bin/sh -c '/usr/local/bin/docker-compose logs -f >> /var/log/{{ item.log }}.log'
+Restart=always
+WorkingDirectory={{ item.path }}
+
+[Install]
+WantedBy=multi-user.target
