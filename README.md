@@ -1,10 +1,22 @@
 # copperleaftech.container-logs
 Enables container logging for a compose service via tail > file.log
 
-The advantages writing the logs out to file over simply using gelf from the compose file are that with only UDP support we might loose logs, we cant view the logs on the server retrospectively and we lose multiline support which we could get from filebeat tailing the log.
+The advantage of writing the logs out to file over simply using gelf from the compose file are that with only UDP support we might lose logs and we can't view the logs on the server retrospectively or in realtime, plus we lose multiline support which we could get from filebeat tailing the log.
+
+Another significant advantage is the encrypted channel support which filebeat offers...!
+
+Please contibute for other OS startup managers. Only systemd is currently supported. 
 
 ### What does it do?
-Could also interact with a filebeat role to install filebeat and place a config file for the designated log
+Installs to the local service manager to run the command docker-compose tail -f >> file.log for a particular compose service.
+
+### Feature Roadmap
+Could also interact with a filebeat role to install filebeat and place a config file for the designated service/log
+
+If used with the container-startup role, dependencies on services could be build in.
+
+### Reliability Note
+This is currently still in testing / development.
 
 ### Usage
 ```
