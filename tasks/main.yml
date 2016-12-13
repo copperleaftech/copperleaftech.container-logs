@@ -1,16 +1,37 @@
 ---
 
+- name: Install init.d file
+  template: src=service.initd.yml.j2 dest=/etc/init.d/{{ item.name }} owner=root mode=0644
+  become: true
+  with_items: "{{ services }}"
+  when: "{{ sysvinit }} == true"
+
+- name: Enable Services (init)
+  service: name={{ item.name }} daemon_reload=yes enabled=yes
+  become: true
+  with_items: "{{ services }}"
+  when: "{{ sysvinit }} == true"
+
+- name: Start Services (init)
+  service: name={{ item.name }} daemon_reload=yes state=started
+  become: true
+  with_items: "{{ services }}"
+  when: "{{ sysvinit }} == true"
+
 - name: Install systemd file
   template: src=service.yml.j2 dest=/etc/systemd/system/{{ item.name }}.logger.service owner=root mode=0644
   become: true
   with_items: "{{ services }}"
+  when: "{{ systemd }} == true"
 
 - name: Enable Services
   systemd: name={{ item.name }} daemon_reload=yes enabled=yes
   become: true
   with_items: "{{ services }}"
+  when: "{{ systemd }} == true"
 
 - name: Start Services
   systemd: name={{ item.name }} daemon_reload=yes state=started
   become: true
   with_items: "{{ services }}"
+  when: "{{ systemd }} == true"

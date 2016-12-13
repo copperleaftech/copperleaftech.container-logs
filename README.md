@@ -57,7 +57,7 @@ WorkingDirectory={{ service.path }}
 WantedBy=multi-user.target
 ```
 
-### sysinitv
+### sysvinit
 TODO
 
 ### upstart
